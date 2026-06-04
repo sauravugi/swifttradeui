@@ -1,119 +1,167 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import {
   Box,
   Button,
-  Card,
-  CardContent,
+  IconButton,
+  InputAdornment,
+  Paper,
   TextField,
   Typography,
 } from "@mui/material";
-import { login } from "../../../services/authService";
+
+import {
+  Visibility,
+  VisibilityOff,
+} from "@mui/icons-material";
+
 import "./LoginPage.css";
-import { ROUTES } from "../../../routes";
 
 export default function LoginPage() {
-  const navigate = useNavigate();
+  const [username, setUsername] =
+    useState("");
 
-  const [clientName, setClientName] = useState("");
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [password, setPassword] =
+    useState("");
 
-  const handleLogin = async (
-    event: React.FormEvent<HTMLFormElement>
+  const [showPassword, setShowPassword] =
+    useState(false);
+
+  const handleSubmit = (
+    e: React.FormEvent
   ) => {
-    event.preventDefault();
+    e.preventDefault();
 
-    if (!clientName.trim()) {
-      alert("Please enter client name");
-      return;
-    }
-
-    if (!username.trim()) {
-      alert("Please enter username");
-      return;
-    }
-
-    if (!password.trim()) {
-      alert("Please enter password");
-      return;
-    }
-
-    try {
-      const response = await login({clientName,username,password,});
-      localStorage.setItem("accessToken",response.accessToken);
-      navigate(ROUTES.DASHBOARD);
-    } catch (error) {
-      console.error("Login Failed", error);
-      alert("Invalid credentials");
-    }
+    console.log({
+      username,
+      password,
+    });
   };
 
   return (
-    <Box className="login-container">
-      <Card className="login-card">
-        <CardContent>
-          <Box className="login-header">
-            <Typography
-              variant="h4"
-              className="login-title"
-            >
-              SwiftTrade
-            </Typography>
+    <Box className="login-page">
+      <Box className="login-left">
+        <Typography className="brand-name">
+          SwiftTrade
+        </Typography>
 
-            <Typography
-              variant="body2"
-              className="login-subtitle"
-            >
-              Trade Finance Portal
-            </Typography>
-          </Box>
+        <Typography className="brand-tagline">
+          Global Trade Finance Platform
+        </Typography>
+
+        <Box className="circle-bg" />
+
+        <Typography className="hero-title">
+          Trade Finance
+        </Typography>
+
+        <Typography className="hero-subtitle">
+          Manage Letters of Credit,
+          Bank Guarantees and Trade
+          Operations from a single
+          enterprise platform.
+        </Typography>
+
+        <Box className="feature-list">
+          <Typography>
+            ✓ Letter of Credit
+          </Typography>
+
+          <Typography>
+            ✓ Bank Guarantee
+          </Typography>
+
+          <Typography>
+            ✓ Collections
+          </Typography>
+
+          <Typography>
+            ✓ Reporting
+          </Typography>
+        </Box>
+      </Box>
+
+      <Box className="login-right">
+        <Paper className="login-card">
+          <Typography
+            variant="h4"
+            className="login-title"
+          >
+            Welcome Back
+          </Typography>
+
+          <Typography
+            className="login-subtitle"
+          >
+            Sign in to your account
+          </Typography>
 
           <Box
             component="form"
-            onSubmit={handleLogin}
             className="login-form"
+            onSubmit={handleSubmit}
           >
-            <TextField
-              label="Client Name"
-              fullWidth
-              value={clientName}
-              onChange={(e) =>
-                setClientName(e.target.value)
-              }
-            />
-
             <TextField
               label="Username"
               fullWidth
               value={username}
               onChange={(e) =>
-                setUsername(e.target.value)
+                setUsername(
+                  e.target.value
+                )
               }
             />
 
             <TextField
               label="Password"
-              type="password"
               fullWidth
+              type={
+                showPassword
+                  ? "text"
+                  : "password"
+              }
               value={password}
               onChange={(e) =>
-                setPassword(e.target.value)
+                setPassword(
+                  e.target.value
+                )
               }
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      onClick={() =>
+                        setShowPassword(
+                          !showPassword
+                        )
+                      }
+                    >
+                      {showPassword ? (
+                        <VisibilityOff />
+                      ) : (
+                        <Visibility />
+                      )}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
             />
+
+            <Typography className="forgot-password">
+              Forgot Password?
+            </Typography>
 
             <Button
               type="submit"
               variant="contained"
               size="large"
               fullWidth
-              className="login-button"
+              className="login-btn"
             >
-              Login
+              Sign In
             </Button>
           </Box>
-        </CardContent>
-      </Card>
+        </Paper>
+      </Box>
     </Box>
   );
 }
