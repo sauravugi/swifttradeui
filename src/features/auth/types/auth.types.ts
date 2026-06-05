@@ -1,5 +1,4 @@
 export interface LoginRequest {
-  clientName: string;
   username: string;
   password: string;
 }

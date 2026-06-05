@@ -1,40 +1,26 @@
 import { useState } from "react";
-import {
-  Box,
-  Button,
-  IconButton,
-  InputAdornment,
-  Paper,
-  TextField,
-  Typography,
-} from "@mui/material";
-
-import {
-  Visibility,
-  VisibilityOff,
-} from "@mui/icons-material";
-
+import { Box, Button, IconButton, InputAdornment, Paper, TextField, Typography} from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 import "./LoginPage.css";
+import { login } from "../../../services/authService";
+import { useNavigate } from "react-router-dom";
+import { ROUTES } from "../../../routes/routeConstants";
 
 export default function LoginPage() {
-  const [username, setUsername] =
-    useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
 
-  const [password, setPassword] =
-    useState("");
-
-  const [showPassword, setShowPassword] =
-    useState(false);
-
-  const handleSubmit = (
-    e: React.FormEvent
-  ) => {
+  const handleSubmit = async ( e: React.FormEvent ) => {
     e.preventDefault();
-
-    console.log({
-      username,
-      password,
-    });
+    try {
+      const response = await login({ username, password });
+      localStorage.setItem( "token", response.accessToken);
+      navigate(ROUTES.DASHBOARD, { replace: true } );
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -116,35 +102,28 @@ export default function LoginPage() {
             <TextField
               label="Password"
               fullWidth
-              type={
-                showPassword
-                  ? "text"
-                  : "password"
-              }
+              type={showPassword ? "text" : "password"}
               value={password}
-              onChange={(e) =>
-                setPassword(
-                  e.target.value
-                )
-              }
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <IconButton
-                      onClick={() =>
-                        setShowPassword(
-                          !showPassword
-                        )
-                      }
-                    >
-                      {showPassword ? (
-                        <VisibilityOff />
-                      ) : (
-                        <Visibility />
-                      )}
-                    </IconButton>
-                  </InputAdornment>
-                ),
+              onChange={(e) => setPassword(e.target.value)}
+              slotProps={{
+                input: {
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        edge="end"
+                        onClick={() =>
+                          setShowPassword(!showPassword)
+                        }
+                      >
+                        {showPassword ? (
+                          <VisibilityOff />
+                        ) : (
+                          <Visibility />
+                        )}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                },
               }}
             />
 

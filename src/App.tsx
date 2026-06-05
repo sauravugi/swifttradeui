@@ -1,6 +1,7 @@
 import { Header } from "./components/header";
 import { Footer } from "./components/footer";
 import LoginPage from "./features/auth/pages/LoginPage";
+import AppRoutes from "./routes/AppRoutes";
 import "./App.css";
 
 function App() {
@@ -8,7 +9,7 @@ function App() {
     <div className="app-container">
       <Header />
       <main className="app-content">
-        <LoginPage />
+        <AppRoutes />
       </main>
       <Footer />
     </div>
