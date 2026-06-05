@@ -1,16 +1,25 @@
-import "./Header.css";
+import "./header.css";
 
-export default function Header() {
+interface HeaderProps {
+  isAuthenticated: boolean;
+  onLogout?: () => void;
+}
+
+export default function Header({
+  isAuthenticated,
+  onLogout,
+}: HeaderProps) {
   return (
     <header className="app-header">
-      {/* LEFT SECTION */}
-      <div className="header-left">
-        <img
-          src="/st_logo.png"
-          alt="SwiftTrade"
-          className="header-logo"
-        />
+      {/* LEFT - LOGO */}
+      <img
+        src="/st_logo.png"
+        alt="SwiftTrade"
+        className="header-logo"
+      />
 
+      {/* RIGHT SIDE */}
+      <div className="header-right">
         <div className="header-text">
           <h1 className="company-name">
             SwiftTrade
@@ -19,21 +28,15 @@ export default function Header() {
             Trade Finance Platform
           </p>
         </div>
-      </div>
 
-      {/* CENTER NAV (future use) */}
-      <nav className="header-nav">
-        <a href="#">Dashboard</a>
-        <a href="#">LC</a>
-        <a href="#">Guarantee</a>
-        <a href="#">Reports</a>
-      </nav>
-
-      {/* RIGHT SECTION */}
-      <div className="header-right">
-        <button className="login-btn">
-          Login
-        </button>
+        {isAuthenticated && (
+          <button
+            className="logout-btn"
+            onClick={onLogout}
+          >
+            Logout
+          </button>
+        )}
       </div>
     </header>
   );

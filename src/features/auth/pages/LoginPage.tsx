@@ -40,13 +40,6 @@ export default function LoginPage() {
   return (
     <Box className="login-page">
       <Box className="login-left">
-        <Typography className="brand-name">
-          SwiftTrade
-        </Typography>
-
-        <Typography className="brand-tagline">
-          Global Trade Finance Platform
-        </Typography>
 
         <Box className="circle-bg" />
 
@@ -55,27 +48,36 @@ export default function LoginPage() {
         </Typography>
 
         <Typography className="hero-subtitle">
-          Manage Letters of Credit,
-          Bank Guarantees and Trade
-          Operations from a single
-          enterprise platform.
+          Digitize and manage your trade
+          finance operations with complete
+          visibility across Letters of
+          Credit, Guarantees, Amendments,
+          Collections and Reporting.
         </Typography>
 
         <Box className="feature-list">
           <Typography>
-            ✓ Letter of Credit
+            ✓ Letter of Credit Management
           </Typography>
 
           <Typography>
-            ✓ Bank Guarantee
+            ✓ Bank Guarantee Processing
           </Typography>
 
           <Typography>
-            ✓ Collections
+            ✓ Amendments & Approvals
           </Typography>
 
           <Typography>
-            ✓ Reporting
+            ✓ Collections & Payments
+          </Typography>
+
+          <Typography>
+            ✓ Trade Reporting & Analytics
+          </Typography>
+
+          <Typography>
+            ✓ Audit Trail & Compliance
           </Typography>
         </Box>
       </Box>

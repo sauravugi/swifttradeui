@@ -1,0 +1,45 @@
+/* Reset */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+/* Main Application Layout */
+
+.app-container {
+  height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+
+  overflow: hidden;
+}
+
+/* Header */
+
+.app-header {
+  flex-shrink: 0;
+}
+
+/* Content Area */
+
+.app-content {
+  flex: 1;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* Footer */
+
+.app-footer {
+  flex-shrink: 0;
+}
