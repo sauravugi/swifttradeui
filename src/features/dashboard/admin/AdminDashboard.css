@@ -1,0 +1,18 @@
+.dashboard-container {
+  padding: 20px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.card {
+  padding: 20px;
+  background: #1e293b;
+  color: white;
+  border-radius: 10px;
+  cursor: pointer;
+}

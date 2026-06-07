@@ -6,23 +6,38 @@ import { logout } from "../../features/auth/authSlice";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import { IconButton, Tooltip } from "@mui/material";
 import { useEffect, useState } from "react";
+import { jwtDecode } from "jwt-decode";
 
 export default function Header() {
-  const navigate = useNavigate();
-  const dispatch = useAppDispatch();
+    const navigate = useNavigate();
+    const dispatch = useAppDispatch();
 
-  const isAuthenticated = useAppSelector(
-    (state) => state.auth.isAuthenticated
-  );
+    const isAuthenticated = useAppSelector( (state) => state.auth.isAuthenticated );
+    const [username, setUsername] = useState("");
+    const [clientName, setClientName] = useState("");
+    const [currentTime, setCurrentTime] = useState(new Date());
+    const token = useAppSelector((state) => state.auth.token);
 
-    const [currentTime, setCurrentTime] =
-      useState(new Date());
+    useEffect(() => {
+      if (token) {
+        try {
+          const payload: any = jwtDecode(token);
+
+          setUsername(payload.username || "");
+          setClientName(payload.clientName || "");
+        } catch (e) {
+          console.error("Token decode failed", e);
+        }
+      } else {
+        setUsername("");
+        setClientName("");
+      }
+    }, [token]);
 
     useEffect(() => {
       const timer = setInterval(() => {
         setCurrentTime(new Date());
       }, 1000);
-
       return () => clearInterval(timer);
     }, []);
 
@@ -66,7 +81,7 @@ export default function Header() {
               }
             ).toUpperCase()}
           </span>
-          <div className="time-divider" />
+          <div className="divider" />
           <span className="header-date">
             {currentTime.toLocaleDateString(
               "en-IN",
@@ -80,14 +95,22 @@ export default function Header() {
         </div>
 
         {isAuthenticated && (
-            <Tooltip title="Logout">
-              <IconButton
-                onClick={handleLogout}
-                className="logout-btn"
-              >
-                <LogoutOutlinedIcon />
-              </IconButton>
-            </Tooltip>
+            <div className="header-user-section">
+                <div className="user-info">
+                  <span className="user-name">{username}</span>
+                  <div className="divider" />
+                  <span className="client-name">({clientName})</span>
+                </div>
+
+                <Tooltip title="Logout">
+                  <IconButton
+                    onClick={handleLogout}
+                    className="logout-btn"
+                  >
+                    <LogoutOutlinedIcon />
+                  </IconButton>
+                </Tooltip>
+            </div>
           )}
       </div>
     </header>

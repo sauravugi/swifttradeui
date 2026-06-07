@@ -1,140 +1,70 @@
-import { useNavigate } from "react-router-dom";
-import {
-  Box,
-  Button,
-  Card,
-  CardContent,
-  Typography,
-} from "@mui/material";
+import { useEffect, useState } from "react";
+import { jwtDecode } from "jwt-decode";
+import { AdminDashboard } from "../admin/AdminDashboard";
+import { BankDashboard } from "../bank/BankDashboard";
+import { CorpDashboard } from "../corp/CorpDashboard";
+import { useAppSelector } from "../../../hooks/reduxHooks";
 
-import { ROUTES } from "../../../routes";
-import "./DashBoard.css";
+interface JwtPayload {
+  roles?: string[];
+}
 
-export default function DashboardPage() {
-  const navigate = useNavigate();
+export default function DashBoard() {
+  const token = useAppSelector((state) => state.auth.token);
 
-  const username =
-    localStorage.getItem("username") || "User";
+  const [role, setRole] = useState<
+    "ADMIN" | "BANK" | "CORP" | "NONE" | null
+  >(null);
 
-  const role =
-    localStorage.getItem("role") || "CUSTOMER";
+  useEffect(() => {
+    if (!token) {
+      setRole("NONE");
+      return;
+    }
 
-  const clientName =
-    localStorage.getItem("clientName") || "Demo Client";
+    try {
+      const payload = jwtDecode<JwtPayload>(token);
 
-  const dashboardModules = {
-    ADMIN: [
-      "User Management",
-      "Role Management",
-      "Client Management",
-      "Audit Logs",
-    ],
-    EMPLOYEE: [
-      "Pending LC Requests",
-      "Pending BG Requests",
-      "Compliance Review",
-      "Customer Support",
-    ],
-    CUSTOMER: [
-      "Create Letter Of Credit",
-      "Request Bank Guarantee",
-      "My Transactions",
-      "Reports",
-    ],
-  };
+      const roles = payload.roles || [];
 
-  const modules =
-    dashboardModules[
-      role as keyof typeof dashboardModules
-    ] || dashboardModules.CUSTOMER;
+      if (roles.includes("SUPER_ADMIN")) {
+        setRole("ADMIN");
+      } else if (
+        roles.includes("BANK_ADMIN") ||
+        roles.includes("BANK_USER")
+      ) {
+        setRole("BANK");
+      } else if (
+        roles.includes("CORPORATE_ADMIN") ||
+        roles.includes("CORPORATE_USER")
+      ) {
+        setRole("CORP");
+      } else {
+        setRole("NONE");
+      }
+    } catch (err) {
+      console.error("Invalid token", err);
+      setRole("NONE");
+    }
+  }, [token]);
+
+  if (role === null) {
+    return <div>Loading...</div>;
+  }
+
+  if (role === "NONE") {
+    return (
+      <div style={{ padding: 20, color: "red" }}>
+        Unauthorized Access
+      </div>
+    );
+  }
 
   return (
-    <Box className="dashboard-container">
-      <Box className="dashboard-header">
-        <Box>
-          <Typography variant="h4">
-            Trade Finance Dashboard
-          </Typography>
-
-          <Typography
-            variant="body1"
-            className="dashboard-subtitle"
-          >
-            Welcome {username}
-          </Typography>
-
-          <Typography
-            variant="body2"
-            className="dashboard-subtitle"
-          >
-            {clientName} | {role}
-          </Typography>
-        </Box>
-      </Box>
-
-      <Box className="dashboard-stats">
-        <Card className="stat-card">
-          <CardContent>
-            <Typography variant="h6">
-              Open Transactions
-            </Typography>
-
-            <Typography variant="h4">
-              24
-            </Typography>
-          </CardContent>
-        </Card>
-
-        <Card className="stat-card">
-          <CardContent>
-            <Typography variant="h6">
-              Pending Approvals
-            </Typography>
-
-            <Typography variant="h4">
-              08
-            </Typography>
-          </CardContent>
-        </Card>
-
-        <Card className="stat-card">
-          <CardContent>
-            <Typography variant="h6">
-              Completed Today
-            </Typography>
-
-            <Typography variant="h4">
-              15
-            </Typography>
-          </CardContent>
-        </Card>
-      </Box>
-
-      <Typography
-        variant="h5"
-        className="section-title"
-      >
-        Available Modules
-      </Typography>
-
-      <Box className="module-grid">
-        {modules.map((module) => (
-          <Card
-            key={module}
-            className="module-card"
-          >
-            <CardContent>
-              <Typography variant="h6">
-                {module}
-              </Typography>
-
-              <Typography variant="body2">
-                Access and manage {module}.
-              </Typography>
-            </CardContent>
-          </Card>
-        ))}
-      </Box>
-    </Box>
+    <>
+      {role === "ADMIN" && <AdminDashboard />}
+      {role === "BANK" && <BankDashboard />}
+      {role === "CORP" && <CorpDashboard />}
+    </>
   );
 }

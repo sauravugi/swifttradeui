@@ -87,7 +87,7 @@
   line-height: 1.2;
 }
 
-.time-divider {
+.divider {
   width: 100%;
   height: 1px;
   margin: 4px 0;
@@ -98,4 +98,30 @@
     255,
     0.15
   );
+}
+
+.header-user-section {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  line-height: 1.2;
+}
+
+.user-name {
+  font-weight: 700;
+  color: #ffffff;
+  font-size: 18px;
+  line-height: 1.2;
+}
+
+.client-name {
+  color: #94a3b8;
+  font-size: 14px;
+  line-height: 1.2;
 }
