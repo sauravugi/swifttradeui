@@ -22,11 +22,6 @@ export default function DashboardPage() {
   const clientName =
     localStorage.getItem("clientName") || "Demo Client";
 
-  const handleLogout = () => {
-    localStorage.clear();
-    navigate(ROUTES.LOGIN);
-  };
-
   const dashboardModules = {
     ADMIN: [
       "User Management",
@@ -75,13 +70,6 @@ export default function DashboardPage() {
             {clientName} | {role}
           </Typography>
         </Box>
-
-        <Button
-          variant="outlined"
-          onClick={handleLogout}
-        >
-          Logout
-        </Button>
       </Box>
 
       <Box className="dashboard-stats">

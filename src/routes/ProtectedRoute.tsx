@@ -1,5 +1,6 @@
 import { Navigate } from "react-router-dom";
 import { ROUTES } from "./routeConstants";
+import { useAppSelector } from "../hooks/reduxHooks";
 
 interface Props {
   children: React.ReactNode;
@@ -8,11 +9,16 @@ interface Props {
 export default function ProtectedRoute({
   children,
 }: Props) {
-  const isAuthenticated = true;
+  const isAuthenticated = useAppSelector(
+    (state) => state.auth.isAuthenticated
+  );
 
   return isAuthenticated ? (
     <>{children}</>
   ) : (
-    <Navigate to={ROUTES.LOGIN} replace />
+    <Navigate
+      to={ROUTES.LOGIN}
+      replace
+    />
   );
 }

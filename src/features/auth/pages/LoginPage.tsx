@@ -5,23 +5,43 @@ import "./LoginPage.css";
 import { login } from "../../../services/authService";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../../../routes/routeConstants";
+import { useAppDispatch } from "../../../hooks/reduxHooks";
+import { loginSuccess } from "../authSlice";
 
 export default function LoginPage() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const navigate = useNavigate();
-  const [showPassword, setShowPassword] = useState(false);
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+    const navigate = useNavigate();
+    const dispatch = useAppDispatch();
+    const [showPassword, setShowPassword] = useState(false);
 
-  const handleSubmit = async ( e: React.FormEvent ) => {
-    e.preventDefault();
-    try {
-      const response = await login({ username, password });
-      localStorage.setItem( "token", response.accessToken);
-      navigate(ROUTES.DASHBOARD, { replace: true } );
-    } catch (error) {
-      console.error(error);
-    }
-  };
+    const handleSubmit = async (
+      e: React.FormEvent
+    ) => {
+      e.preventDefault();
+
+      try {
+        const response = await login({
+          username,
+          password,
+        });
+
+        sessionStorage.setItem(
+          "token",
+          response.accessToken
+        );
+
+        dispatch(
+          loginSuccess(response.accessToken)
+        );
+
+        navigate(ROUTES.DASHBOARD, {
+          replace: true,
+        });
+      } catch (error) {
+        console.error(error);
+      }
+    };
 
   return (
     <Box className="login-page">
