@@ -1,0 +1,13 @@
+.admin-home {
+  padding: 24px;
+}
+
+.admin-home h2 {
+  margin: 0 0 12px;
+  color: #1e293b;
+}
+
+.admin-home p {
+  margin: 0;
+  color: #64748b;
+}

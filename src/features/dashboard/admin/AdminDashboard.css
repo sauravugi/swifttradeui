@@ -1,18 +1,66 @@
-.dashboard-container {
-  padding: 20px;
+.admin-dashboard {
+  display: flex;
+  min-height: 100vh;
+  background: #f5f7fb;
 }
 
-.grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 15px;
-  margin-top: 20px;
+/* SIDEBAR */
+
+.admin-sidebar {
+  width: 230px;
+  background: #0f172a;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  padding: 12px 0;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.card {
-  padding: 20px;
-  background: #1e293b;
-  color: white;
-  border-radius: 10px;
+/* MENU */
+
+.menu-item {
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  text-align: left;
+  padding: 14px 20px;
+  font-size: 14px;
   cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.menu-item:hover,
+.menu-item.active {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* CONTENT */
+
+.admin-content {
+  flex: 1;
+  padding: 24px;
+  overflow-y: auto;
+}
+
+.admin-content h2 {
+  margin: 0 0 12px;
+  color: #1e293b;
+}
+
+.admin-content p {
+  margin: 0;
+  color: #64748b;
+  font-size: 14px;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 768px) {
+  .admin-dashboard {
+    flex-direction: column;
+  }
+
+  .admin-sidebar {
+    width: 100%;
+  }
 }
