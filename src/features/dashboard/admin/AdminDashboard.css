@@ -19,12 +19,16 @@
 /* MENU */
 
 .menu-item {
+  display: block;
+
   background: transparent;
-  border: none;
   color: #ffffff;
-  text-align: left;
+
+  text-decoration: none; /* underline remove */
+
   padding: 14px 20px;
   font-size: 14px;
+
   cursor: pointer;
   transition: background-color 0.2s ease;
 }
@@ -38,7 +42,7 @@
 
 .admin-content {
   flex: 1;
-  padding: 24px;
+  padding: 0;
   overflow-y: auto;
 }
 

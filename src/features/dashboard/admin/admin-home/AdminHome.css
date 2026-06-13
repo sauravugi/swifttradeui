@@ -1,13 +1,37 @@
-.admin-home {
-  padding: 24px;
+.admin-navbar {
+  background: #0f172a;
+  padding: 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-.admin-home h2 {
-  margin: 0 0 12px;
-  color: #1e293b;
-}
-
-.admin-home p {
+.admin-navbar ul {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  list-style: none;
   margin: 0;
-  color: #64748b;
+  padding: 0;
+
+  width: 100%;
+}
+
+.admin-navbar li {
+  display: flex;
+}
+
+.menu-item-home {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 16px 0;
+  text-decoration: none;
+  color: #fff;
+  background: transparent;
+  transition: 0.2s;
+}
+
+.menu-item-home:hover,
+.menu-item-home.active {
+  background: rgba(255, 255, 255, 0.08);
 }

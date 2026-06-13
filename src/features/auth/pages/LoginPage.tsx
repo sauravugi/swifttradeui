@@ -7,41 +7,49 @@ import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../../../routes/routeConstants";
 import { useAppDispatch } from "../../../hooks/reduxHooks";
 import { loginSuccess } from "../authSlice";
+import { jwtDecode } from "jwt-decode";
+
+interface JwtPayload {
+  roles?: string[];
+}
 
 export default function LoginPage() {
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
-    const navigate = useNavigate();
-    const dispatch = useAppDispatch();
-    const [showPassword, setShowPassword] = useState(false);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
-    const handleSubmit = async (
-      e: React.FormEvent
-    ) => {
-      e.preventDefault();
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
-      try {
-        const response = await login({
-          username,
-          password,
-        });
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
 
-        sessionStorage.setItem(
-          "token",
-          response.accessToken
-        );
+    try {
+      const response = await login({username,password});
+      const token = response.accessToken;
+      sessionStorage.setItem("token", token);
+      dispatch(loginSuccess(token));
 
-        dispatch(
-          loginSuccess(response.accessToken)
-        );
+      const payload = jwtDecode<JwtPayload>(token);
+      const roles = payload.roles || [];
 
-        navigate(ROUTES.DASHBOARD, {
-          replace: true,
-        });
-      } catch (error) {
-        console.error(error);
+      if (roles.includes("SUPER_ADMIN")) {
+        navigate("/admin", { replace: true });
       }
-    };
+      else if (roles.includes("BANK_ADMIN") || roles.includes("BANK_USER")) {
+        navigate("/bank", { replace: true });
+      }
+      else if (roles.includes("CORPORATE_ADMIN") || roles.includes("CORPORATE_USER")) {
+        navigate("/corp", { replace: true });
+      }
+      else {
+        navigate("/", { replace: true });
+      }
+
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <Box className="login-page">
@@ -56,67 +64,39 @@ export default function LoginPage() {
         <Typography className="hero-subtitle">
           Digitize and manage your trade
           finance operations with complete
-          visibility across Letters of
-          Credit, Guarantees, Amendments,
-          Collections and Reporting.
+          visibility across Letters of Credit,
+          Guarantees, Amendments, Collections
+          and Reporting.
         </Typography>
 
         <Box className="feature-list">
-          <Typography>
-            ✓ Letter of Credit Management
-          </Typography>
-
-          <Typography>
-            ✓ Bank Guarantee Processing
-          </Typography>
-
-          <Typography>
-            ✓ Amendments & Approvals
-          </Typography>
-
-          <Typography>
-            ✓ Collections & Payments
-          </Typography>
-
-          <Typography>
-            ✓ Trade Reporting & Analytics
-          </Typography>
-
-          <Typography>
-            ✓ Audit Trail & Compliance
-          </Typography>
+          <Typography>✓ Letter of Credit Management</Typography>
+          <Typography>✓ Bank Guarantee Processing</Typography>
+          <Typography>✓ Amendments & Approvals</Typography>
+          <Typography>✓ Collections & Payments</Typography>
+          <Typography>✓ Trade Reporting & Analytics</Typography>
+          <Typography>✓ Audit Trail & Compliance</Typography>
         </Box>
       </Box>
 
       <Box className="login-right">
         <Paper className="login-card">
-          <Typography
-            variant="h4"
-            className="login-title"
-          >
+
+          <Typography variant="h4" className="login-title">
             Welcome Back
           </Typography>
 
-          <Typography
-            className="login-subtitle"
-          >
+          <Typography className="login-subtitle">
             Sign in to your account
           </Typography>
 
-          <Box
-            component="form"
-            className="login-form"
-            onSubmit={handleSubmit}
-          >
+          <Box component="form" className="login-form" onSubmit={handleSubmit}>
+
             <TextField
               label="Username"
               fullWidth
               value={username}
-              onChange={(e) =>
-                setUsername(
-                  e.target.value
-                )
-              }
+              onChange={(e) => setUsername(e.target.value)}
             />
 
             <TextField
@@ -131,15 +111,9 @@ export default function LoginPage() {
                     <InputAdornment position="end">
                       <IconButton
                         edge="end"
-                        onClick={() =>
-                          setShowPassword(!showPassword)
-                        }
+                        onClick={() => setShowPassword(!showPassword)}
                       >
-                        {showPassword ? (
-                          <VisibilityOff />
-                        ) : (
-                          <Visibility />
-                        )}
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
                       </IconButton>
                     </InputAdornment>
                   ),

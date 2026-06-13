@@ -1,0 +1,38 @@
+.inbound-container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f5f7fb;
+  padding: 20px;
+}
+
+.inbound-card {
+  background: #ffffff;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  max-width: 600px;
+  width: 100%;
+  text-align: center;
+}
+
+.inbound-card h1 {
+  margin: 0;
+  font-size: 28px;
+  color: #0f172a;
+}
+
+.inbound-card h2 {
+  margin: 10px 0 20px;
+  font-size: 20px;
+  color: #334155;
+  font-weight: 500;
+}
+
+.inbound-card p {
+  font-size: 14px;
+  color: #64748b;
+  line-height: 1.6;
+}

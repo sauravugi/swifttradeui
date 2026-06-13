@@ -1,195 +1,92 @@
-import { useState } from "react";
+import { NavLink, Outlet, useLocation } from "react-router-dom";
+import { ROUTES } from "../../../routes/routeConstants";
 import "./AdminDashboard.css";
-import { AdminHome } from "./admin-home";
 
 export function AdminDashboard() {
-  const [activeMenu, setActiveMenu] = useState("home");
-
-  const renderContent = () => {
-    switch (activeMenu) {
-      case "home":
-        return <AdminHome />;
-
-      case "clientManagement":
-        return (
-          <>
-            <h2>Client Management</h2>
-            <p>Manage application clients here.</p>
-          </>
-        );
-
-      case "messageLogs":
-        return (
-          <>
-            <h2>Message Logs</h2>
-            <p>View and analyze message logs.</p>
-          </>
-        );
-
-      case "groupManagement":
-        return (
-          <>
-            <h2>Group Management</h2>
-            <p>Manage groups and permissions.</p>
-          </>
-        );
-
-      case "adminManagement":
-        return (
-          <>
-            <h2>Admin Management</h2>
-            <p>Manage administrator accounts.</p>
-          </>
-        );
-
-      case "docManagement":
-        return (
-          <>
-            <h2>Document Management</h2>
-            <p>Manage uploaded documents.</p>
-          </>
-        );
-
-      case "microservices":
-        return (
-          <>
-            <h2>Microservices</h2>
-            <p>Monitor and manage microservices.</p>
-          </>
-        );
-
-      case "businessReports":
-        return (
-          <>
-            <h2>Business Reports</h2>
-            <p>View business reports and analytics.</p>
-          </>
-        );
-
-      case "monitoring":
-        return (
-          <>
-            <h2>Monitoring</h2>
-            <p>Monitoring System reports</p>
-          </>
-        );
-
-      case "integrationLogs":
-        return (
-          <>
-            <h2>Integration Logs</h2>
-            <p>View integration logs here.</p>
-          </>
-        );
-
-      default:
-        return (
-          <>
-            <h2>Home</h2>
-            <p>Welcome to Admin Dashboard.</p>
-          </>
-        );
-    }
-  };
+  const location = useLocation();
+  const isHomeActive = location.pathname.startsWith(ROUTES.ADMIN_HOME);
+  const getClass = (active: boolean) => active ? "menu-item active" : "menu-item";
 
   return (
     <div className="admin-dashboard">
       <aside className="admin-sidebar">
-
-        <button
-          className={`menu-item ${activeMenu === "home" ? "active" : ""}`}
-          onClick={() => setActiveMenu("home")}
+        <NavLink
+          to={ROUTES.ADMIN_HOME}
+          className={() => getClass(isHomeActive)}
         >
           Home
-        </button>
+        </NavLink>
 
-        <button
-          className={`menu-item ${
-            activeMenu === "clientManagement" ? "active" : ""
-          }`}
-          onClick={() => setActiveMenu("clientManagement")}
+        <NavLink
+          to={ROUTES.ADMIN_CLIENT_MANAGEMENT}
+          className={({ isActive }) => getClass(isActive)}
         >
           Client Management
-        </button>
+        </NavLink>
 
-        <button
-          className={`menu-item ${
-            activeMenu === "messageLogs" ? "active" : ""
-          }`}
-          onClick={() => setActiveMenu("messageLogs")}
+        <NavLink
+          to={ROUTES.ADMIN_MESSAGE_LOGS}
+          className={({ isActive }) => getClass(isActive)}
         >
           Message Logs
-        </button>
+        </NavLink>
 
-        <button
-          className={`menu-item ${
-            activeMenu === "groupManagement" ? "active" : ""
-          }`}
-          onClick={() => setActiveMenu("groupManagement")}
+        <NavLink
+          to={ROUTES.ADMIN_GROUP_MANAGEMENT}
+          className={({ isActive }) => getClass(isActive)}
         >
           Group Management
-        </button>
+        </NavLink>
 
-        <button
-          className={`menu-item ${
-            activeMenu === "adminManagement" ? "active" : ""
-          }`}
-          onClick={() => setActiveMenu("adminManagement")}
+        <NavLink
+          to={ROUTES.ADMIN_ADMIN_MANAGEMENT}
+          className={({ isActive }) => getClass(isActive)}
         >
           Admin Management
-        </button>
+        </NavLink>
 
-        <button
-          className={`menu-item ${
-            activeMenu === "docManagement" ? "active" : ""
-          }`}
-          onClick={() => setActiveMenu("docManagement")}
+        <NavLink
+          to={ROUTES.ADMIN_DOCUMENT_MANAGEMENT}
+          className={({ isActive }) => getClass(isActive)}
         >
           Document Management
-        </button>
+        </NavLink>
 
-        <button
-          className={`menu-item ${
-            activeMenu === "microservices" ? "active" : ""
-          }`}
-          onClick={() => setActiveMenu("microservices")}
+        <NavLink
+          to={ROUTES.ADMIN_MICROSERVICES}
+          className={({ isActive }) => getClass(isActive)}
         >
           Microservices
-        </button>
+        </NavLink>
 
-        <button
-          className={`menu-item ${
-            activeMenu === "businessReports" ? "active" : ""
-          }`}
-          onClick={() => setActiveMenu("businessReports")}
+        <NavLink
+          to={ROUTES.ADMIN_BUSINESS_REPORTS}
+          className={({ isActive }) => getClass(isActive)}
         >
           Business Reports
-        </button>
+        </NavLink>
 
-        <button
-          className={`menu-item ${
-            activeMenu === "monitoring" ? "active" : ""
-          }`}
-          onClick={() => setActiveMenu("monitoring")}
-          >
+        <NavLink
+          to={ROUTES.ADMIN_MONITORING}
+          className={({ isActive }) => getClass(isActive)}
+        >
           Monitoring
-        </button>
+        </NavLink>
 
-        <button
-          className={`menu-item ${
-            activeMenu === "integrationLogs" ? "active" : ""
-          }`}
-          onClick={() => setActiveMenu("integrationLogs")}
-          >
+        <NavLink
+          to={ROUTES.ADMIN_INTEGRATION_LOGS}
+          className={({ isActive }) => getClass(isActive)}
+        >
           Integration Logs
-        </button>
+        </NavLink>
+
       </aside>
 
+      {/* CONTENT */}
       <main className="admin-content">
-        <div className="content-card">
-          {renderContent()}
-        </div>
+        <Outlet />
       </main>
+
     </div>
   );
 }
