@@ -1,24 +1,23 @@
-.client-navbar {
+.admin-management-navbar {
   background: #0f172a;
   padding: 0;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-.client-navbar ul {
+.admin-management-navbar ul {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   list-style: none;
   margin: 0;
   padding: 0;
-
   width: 100%;
 }
 
-.client-navbar li {
+.admin-management-navbar li {
   display: flex;
 }
 
-.menu-item-client {
+.menu-item-admin-management {
   width: 100%;
   display: flex;
   align-items: center;
@@ -29,31 +28,32 @@
   color: #fff;
   background: transparent;
   transition: 0.2s;
+  text-align: center;
 }
 
-.menu-item-client:hover,
-.menu-item-client.active {
+.menu-item-admin-management:hover,
+.menu-item-admin-management.active {
   background: rgba(255, 255, 255, 0.08);
 }
 
-.client-management-content {
+.admin-management-content {
   padding: 20px;
 }
 
 /* Tablet */
 @media (max-width: 1024px) {
-  .client-navbar ul {
+  .admin-management-navbar ul {
     grid-template-columns: repeat(3, 1fr);
   }
 }
 
 /* Mobile */
 @media (max-width: 768px) {
-  .client-navbar ul {
+  .admin-management-navbar ul {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  .menu-item-client {
+  .menu-item-admin-management {
     padding: 14px 10px;
     font-size: 14px;
   }
@@ -61,11 +61,11 @@
 
 /* Small Mobile */
 @media (max-width: 480px) {
-  .client-navbar ul {
+  .admin-management-navbar ul {
     grid-template-columns: 1fr;
   }
 
-  .menu-item-client {
+  .menu-item-admin-management {
     padding: 12px;
     font-size: 13px;
   }

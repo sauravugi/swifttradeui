@@ -35,3 +35,31 @@
 .menu-item-home.active {
   background: rgba(255, 255, 255, 0.08);
 }
+
+@media (max-width: 1024px) {
+  .admin-navbar ul {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .admin-navbar ul {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .menu-item-home {
+    padding: 14px 10px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .admin-navbar ul {
+    grid-template-columns: 1fr;
+  }
+
+  .menu-item-home {
+    padding: 12px;
+    font-size: 13px;
+  }
+}

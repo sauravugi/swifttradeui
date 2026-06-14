@@ -1,0 +1,25 @@
+.monitoring-page {
+  padding: 20px;
+}
+
+.monitoring-page h2 {
+  margin-bottom: 20px;
+}
+
+.monitoring-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.monitoring-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.monitoring-card h3 {
+  margin-top: 0;
+  margin-bottom: 10px;
+}

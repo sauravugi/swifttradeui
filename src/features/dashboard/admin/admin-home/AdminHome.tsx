@@ -1,18 +1,16 @@
 import { NavLink, Outlet } from "react-router-dom";
 import "./AdminHome.css";
+import { ADMIN_URLS } from "../admin-urls.ts";
 
 export function AdminHome() {
   return (
     <div className="admin-home">
-
-      {/* NAVBAR */}
       <nav className="admin-navbar">
         <ul>
 
           <li>
             <NavLink
-              to="inbound-messages"
-              end
+              to={ADMIN_URLS.ADMIN_HOME_INBOUND_MESSAGES}
               className={({ isActive }) =>
                 `menu-item-home ${isActive ? "active" : ""}`
               }
@@ -23,7 +21,7 @@ export function AdminHome() {
 
           <li>
             <NavLink
-              to="upload-swift-file"
+              to={ADMIN_URLS.ADMIN_HOME_UPLOAD_SWIFT}
               className={({ isActive }) =>
                 `menu-item-home ${isActive ? "active" : ""}`
               }
@@ -34,7 +32,7 @@ export function AdminHome() {
 
           <li>
             <NavLink
-              to="upload-ack-file"
+              to={ADMIN_URLS.ADMIN_HOME_UPLOAD_ACK}
               className={({ isActive }) =>
                 `menu-item-home ${isActive ? "active" : ""}`
               }
@@ -45,7 +43,7 @@ export function AdminHome() {
 
           <li>
             <NavLink
-              to="bank-details"
+              to={ADMIN_URLS.ADMIN_HOME_BANK_DETAILS}
               className={({ isActive }) =>
                 `menu-item-home ${isActive ? "active" : ""}`
               }
@@ -56,7 +54,7 @@ export function AdminHome() {
 
           <li>
             <NavLink
-              to="outbound-messages"
+              to={ADMIN_URLS.ADMIN_HOME_OUTBOUND_MESSAGES}
               className={({ isActive }) =>
                 `menu-item-home ${isActive ? "active" : ""}`
               }
@@ -67,7 +65,7 @@ export function AdminHome() {
 
           <li>
             <NavLink
-              to="activemq-messages"
+              to={ADMIN_URLS.ADMIN_HOME_ACTIVEMQ_MESSAGES}
               className={({ isActive }) =>
                 `menu-item-home ${isActive ? "active" : ""}`
               }
@@ -79,7 +77,6 @@ export function AdminHome() {
         </ul>
       </nav>
 
-      {/* CONTENT */}
       <div className="admin-home-content">
         <Outlet />
       </div>

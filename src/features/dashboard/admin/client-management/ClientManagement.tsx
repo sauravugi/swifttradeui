@@ -1,29 +1,87 @@
+import { NavLink, Outlet } from "react-router-dom";
 import "./ClientManagement.css";
+import { ADMIN_URLS } from "../admin-urls.ts";
 
 export function ClientManagement() {
   return (
     <div className="client-management">
-      <div className="header">
-        <h2>Client Management</h2>
-        <p>Manage all your clients here</p>
+
+      <nav className="client-navbar">
+        <ul>
+
+          <li>
+            <NavLink
+              to={ADMIN_URLS.CLIENT_LIST}
+              className={({ isActive }) =>
+                `menu-item-client ${isActive ? "active" : ""}`
+              }
+            >
+              Client List
+            </NavLink>
+          </li>
+
+          <li>
+            <NavLink
+              to={ADMIN_URLS.ADD_CLIENT}
+              className={({ isActive }) =>
+                `menu-item-client ${isActive ? "active" : ""}`
+              }
+            >
+              Add Client
+            </NavLink>
+          </li>
+
+          <li>
+            <NavLink
+              to={ADMIN_URLS.CLIENT_INTEGRATION}
+              className={({ isActive }) =>
+                `menu-item-client ${isActive ? "active" : ""}`
+              }
+            >
+              Client Integration
+            </NavLink>
+          </li>
+
+          <li>
+            <NavLink
+              to={ADMIN_URLS.EDIT_CLIENT}
+              className={({ isActive }) =>
+                `menu-item-client ${isActive ? "active" : ""}`
+              }
+            >
+              Edit Client
+            </NavLink>
+          </li>
+
+          <li>
+            <NavLink
+              to={ADMIN_URLS.CLIENT_USER}
+              className={({ isActive }) =>
+                `menu-item-client ${isActive ? "active" : ""}`
+              }
+            >
+              Client User
+            </NavLink>
+          </li>
+
+          <li>
+            <NavLink
+              to={ADMIN_URLS.DELETE_CLIENT}
+              className={({ isActive }) =>
+                `menu-item-client ${isActive ? "active" : ""}`
+              }
+            >
+              Delete Client
+            </NavLink>
+          </li>
+
+        </ul>
+      </nav>
+
+      <div className="client-management-content">
+        <Outlet />
       </div>
 
-      <div className="content-box">
-        <div className="card">
-          <h3>Total Clients</h3>
-          <p>125</p>
-        </div>
-
-        <div className="card">
-          <h3>Active Clients</h3>
-          <p>98</p>
-        </div>
-
-        <div className="card">
-          <h3>Inactive Clients</h3>
-          <p>27</p>
-        </div>
-      </div>
     </div>
   );
 }
